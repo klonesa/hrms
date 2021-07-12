@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Data
 @NoArgsConstructor
@@ -19,9 +20,11 @@ public class User {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private int id;
 
+    @NotBlank(message="Email cannot be blank")
     @Column(name="email")
     private String email;
 
+    @NotBlank(message="password cannot be blank")
     @Column(name="password")
     private String password;
 

@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 
 @Data
@@ -19,6 +20,8 @@ public class JobTitle {
     @Column(name="id")
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private int id;
+
+    @NotBlank(message="Job title cannot be blank")
     @Column(name="title")
     private String title;
 
