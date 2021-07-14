@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/candidate-verification")
+@RequestMapping("/api/verification/candidate")
 public class VerificationCodeCandidateController {
 
     private final VerificationCodeCandidateService verificationCodeCandidateService;

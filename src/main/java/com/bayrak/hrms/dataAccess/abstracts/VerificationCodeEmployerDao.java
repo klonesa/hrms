@@ -7,6 +7,4 @@ import java.util.Optional;
 
 public interface VerificationCodeEmployerDao extends JpaRepository<VerificationCodeEmployer, Integer> {
     Optional<VerificationCodeEmployer> findByEmployerId(int id);
-
-
 }

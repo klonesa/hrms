@@ -3,7 +3,6 @@ package com.bayrak.hrms.business.concretes;
 import com.bayrak.hrms.business.abstracts.EmployeeConfirmEmployerService;
 import com.bayrak.hrms.business.abstracts.EmployeeService;
 import com.bayrak.hrms.business.abstracts.EmployerService;
-import com.bayrak.hrms.business.abstracts.VerificationCodeEmployerService;
 import com.bayrak.hrms.core.utilities.results.ErrorResult;
 import com.bayrak.hrms.core.utilities.results.Result;
 import com.bayrak.hrms.core.utilities.results.SuccessResult;
@@ -20,7 +19,7 @@ public class EmployeeConfirmEmployerManager implements EmployeeConfirmEmployerSe
     private final EmployerService employerService;
     private final EmployeeService employeeService;
 
-    public EmployeeConfirmEmployerManager(VerificationCodeEmployerService verificationCodeEmployerService, EmployeeConfirmEmployerDao employeeConfirmEmployerDao, EmployerService employerService, EmployeeService employeeService) {
+    public EmployeeConfirmEmployerManager(EmployeeConfirmEmployerDao employeeConfirmEmployerDao, EmployerService employerService, EmployeeService employeeService) {
         this.employeeConfirmEmployerDao = employeeConfirmEmployerDao;
         this.employerService = employerService;
         this.employeeService = employeeService;
@@ -43,15 +42,6 @@ public class EmployeeConfirmEmployerManager implements EmployeeConfirmEmployerSe
         employeeConfirmEmployerDao.save(
                 new EmployeeConfirmEmployer(employee, employer));
         return new SuccessResult("employer confirmed succesfully "+employee.getFirstName());
-/*        String code2 = verificationCodeEmployerService.getLastCode(employer.getId());
-
-        if(code2.equals(code)){
-            employeeConfirmEmployerDao.save(
-                    new EmployeeConfirmEmployer(employee, employer));
-            return true;
-        }else{
-            throw new RuntimeException("Verification code doesn't match");
-        }*/
     }
 
 }

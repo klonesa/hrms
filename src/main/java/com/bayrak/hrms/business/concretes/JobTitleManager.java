@@ -13,7 +13,7 @@ import java.util.Optional;
 @Service
 public class JobTitleManager implements JobTitleService {
 
-    private JobTitleDao jobTitleDao;
+    private final JobTitleDao jobTitleDao;
 
     @Autowired
     public JobTitleManager(JobTitleDao jobTitleDao) {

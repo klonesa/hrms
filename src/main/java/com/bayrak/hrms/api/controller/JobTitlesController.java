@@ -15,7 +15,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/job-titles")
 public class JobTitlesController {
-    private JobTitleService jobTitleService;
+    private final JobTitleService jobTitleService;
 
     @Autowired
     public JobTitlesController(JobTitleService jobTitleService) {

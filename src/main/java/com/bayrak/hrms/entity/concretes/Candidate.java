@@ -32,10 +32,6 @@ public class Candidate extends User {
     @Column(name="birth_year")
     private int birthYear;
 
-/*    @OneToMany(mappedBy = "candidate")
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private List<VerificationCodeCandidate> verificationCodeCandidates=new ArrayList<>();*/
-
     public Candidate(String email, String password, String firstName, String lastName, String identityNumber, int birthYear) {
         super(email, password);
         this.firstName = firstName;

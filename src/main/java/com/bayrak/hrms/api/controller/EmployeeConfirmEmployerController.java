@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/confirm-employer")
 public class EmployeeConfirmEmployerController {
 
-    private EmployeeConfirmEmployerService employeeConfirmEmployerService;
+    private final EmployeeConfirmEmployerService employeeConfirmEmployerService;
 
     public EmployeeConfirmEmployerController(EmployeeConfirmEmployerService employeeConfirmEmployerService) {
         this.employeeConfirmEmployerService = employeeConfirmEmployerService;
