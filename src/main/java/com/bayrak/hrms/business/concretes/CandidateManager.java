@@ -1,6 +1,7 @@
 package com.bayrak.hrms.business.concretes;
 
 import com.bayrak.hrms.business.abstracts.CandidateService;
+import com.bayrak.hrms.business.abstracts.VerificationCodeCandidateService;
 import com.bayrak.hrms.business.abstracts.VerifyService;
 import com.bayrak.hrms.core.utilities.results.Result;
 import com.bayrak.hrms.dataAccess.abstracts.CandidateDao;
@@ -14,13 +15,17 @@ import java.util.Optional;
 @Service
 public class CandidateManager implements CandidateService {
 
-    private CandidateDao candidateDao;
-    private VerifyService<Candidate> candidateVerifyService;
+    private final CandidateDao candidateDao;
+    private final VerifyService<Candidate> candidateVerifyService;
+    private final VerificationCodeCandidateService verificationCodeCandidateService;
+
 
     @Autowired
-    public CandidateManager(CandidateDao candidateDao,VerifyService<Candidate> candidateVerifyService) {
+    public CandidateManager(CandidateDao candidateDao, VerifyService<Candidate> candidateVerifyService
+    ,VerificationCodeCandidateService verificationCodeCandidateService) {
         this.candidateDao = candidateDao;
         this.candidateVerifyService = candidateVerifyService;
+        this.verificationCodeCandidateService=verificationCodeCandidateService;
     }
     
     
@@ -30,13 +35,10 @@ public class CandidateManager implements CandidateService {
         Result result = candidateVerifyService.verify(candidate);
         if(result.isSuccess()){
             candidateDao.save(candidate);
-            System.out.println("success");
-            return result;
+            verificationCodeCandidateService.generateCode(candidate.getId());
 
-        }else{
-            System.out.println("else");
-            return result;
         }
+        return result;
 
     }
 

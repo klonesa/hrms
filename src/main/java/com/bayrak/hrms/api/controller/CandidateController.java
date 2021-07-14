@@ -3,7 +3,6 @@ package com.bayrak.hrms.api.controller;
 
 import com.bayrak.hrms.business.abstracts.CandidateService;
 import com.bayrak.hrms.core.utilities.results.DataResult;
-import com.bayrak.hrms.core.utilities.results.ErrorResult;
 import com.bayrak.hrms.core.utilities.results.Result;
 import com.bayrak.hrms.core.utilities.results.SuccessDataResult;
 import com.bayrak.hrms.entity.concretes.Candidate;
@@ -35,10 +34,7 @@ public class CandidateController {
 
     @PostMapping
     public Result add(@RequestBody Candidate candidate){
-        try {
-            return candidateService.save(candidate) ;
-        } catch (Exception e) {
-            return new ErrorResult("Identity number or email already exist - " + e.getMessage());
-        }
+
+            return candidateService.save(candidate);
     }
 }

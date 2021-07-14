@@ -1,16 +1,12 @@
 package com.bayrak.hrms.entity.concretes;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import java.util.ArrayList;
-import java.util.List;
 
 
 @EqualsAndHashCode(callSuper = true)
@@ -29,9 +25,6 @@ public class Employer extends User{
     @Column(name="phone_number")
     private String phoneNumber;
 
-    @OneToMany(mappedBy = "employer")
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private List<VerificationCodeEmployer> verificationCodeEmployer= new ArrayList<>();
 
     public Employer(String email, String password, String companyName, String webAdress, String phoneNumber) {
         super(email, password);
