@@ -43,11 +43,6 @@
 			<optional>true</optional>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-boot-starter</artifactId>
 			<version>3.0.0</version>
@@ -67,6 +62,20 @@
 			<artifactId>validation-api</artifactId>
 			<version>2.0.1.Final</version>
 		</dependency>
+		<dependency>
+			<scope>system</scope>
+			<groupId>ksoap</groupId>
+			<artifactId>ExKsoap</artifactId>
+			<version>1</version>
+			<systemPath>${project.basedir}/easywsdl/ksoap/ExKsoap/1/ExKsoap-1.jar</systemPath>
+		</dependency>
+		<dependency>
+			<scope>system</scope>
+			<groupId>ksoap</groupId>
+			<artifactId>ExKsoapandroiad</artifactId>
+			<version>1</version>
+			<systemPath>${project.basedir}/easywsdl/ksoap/ExKsoapandroiad/1/ExKsoapandroiad-1.jar</systemPath>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -83,6 +92,42 @@
 					</excludes>
 				</configuration>
 			</plugin>
+<!--			<plugin>-->
+<!--				<groupId>io.fabric8</groupId>-->
+<!--				<artifactId>docker-maven-plugin</artifactId>-->
+<!--				<version>0.26.0</version>-->
+<!--				<extensions>true</extensions>-->
+<!--				<configuration>-->
+<!--					<verbose>true</verbose>-->
+<!--					<images>-->
+<!--						<image>-->
+<!--							<name>hrms</name>-->
+<!--							<build>-->
+<!--								<from>openjdk:15</from>-->
+<!--								<entryPoint>-->
+<!--									<exec>-->
+<!--										<args>java</args>-->
+<!--										<args>-jar</args>-->
+<!--										<args>/maven/${project.artifactId}-${project.version}.jar</args>-->
+<!--									</exec>-->
+<!--								</entryPoint>-->
+<!--								<assembly>-->
+<!--									<descriptorRef>artifact</descriptorRef>-->
+<!--								</assembly>-->
+<!--							</build>-->
+<!--						</image>-->
+<!--					</images>-->
+<!--				</configuration>-->
+<!--				<executions>-->
+<!--					<execution>-->
+<!--						<id>build</id>-->
+<!--						<phase>post-integration-test</phase>-->
+<!--						<goals>-->
+<!--							<goal>build</goal>-->
+<!--						</goals>-->
+<!--					</execution>-->
+<!--				</executions>-->
+<!--			</plugin>-->
 		</plugins>
 	</build>
 
