@@ -1,0 +1,18 @@
+version: '3.1'
+
+services:
+  pg-local:
+    restart: always
+    container_name: pg-local
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=hrms
+
+    volumes:
+      - db-data-local:/var/lib/postgresql/data
+volumes:
+  db-data-local:
+    driver: local

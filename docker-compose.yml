@@ -1,0 +1,30 @@
+version: '3.1'
+
+services:
+  app:
+    container_name: springboot-postgresql
+    image: hrms-postgres
+    restart: always
+    build: ./
+    ports:
+      - "8080:8080"
+    depends_on:
+      - hrms-pg-server
+    links:
+      - hrms-pg-server
+
+  hrms-pg-server:
+    restart: always
+    container_name: hrms-pg-server
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=hrms
+
+    volumes:
+    - db-data:/var/lib/postgresql/data
+volumes:
+  db-data:
+    driver: local
