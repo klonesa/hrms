@@ -12,6 +12,10 @@ services:
       - hrms-pg-server
     links:
       - hrms-pg-server
+    environment:
+#      - PROFILE=docker
+      - "SPRING_PROFILES_ACTIVE=docker"
+
 
   hrms-pg-server:
     restart: always
