@@ -1,6 +1,9 @@
 package com.bayrak.hrms.entity.concretes;
 
+import com.bayrak.hrms.entity.concretes.resume.JobTitle;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,9 +12,11 @@ import java.util.Date;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name="job_advertisement")
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@Builder
 public class JobAdvertisement {
 
     @Id
@@ -59,7 +64,7 @@ public class JobAdvertisement {
     private Employer employer;
 
 
-    public JobAdvertisement(com.bayrak.hrms.entity.concretes.JobTitle jobTitle, String description, City city, int minSalary, int maxSalary, int openPositionNumber, Date closeDate, Employer employer) {
+    public JobAdvertisement(com.bayrak.hrms.entity.concretes.resume.JobTitle jobTitle, String description, City city, int minSalary, int maxSalary, int openPositionNumber, Date closeDate, Employer employer) {
         JobTitle = jobTitle;
         this.description = description;
         this.city = city;

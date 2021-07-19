@@ -5,7 +5,7 @@ import com.bayrak.hrms.business.abstracts.JobTitleService;
 import com.bayrak.hrms.core.utilities.results.Result;
 import com.bayrak.hrms.core.utilities.results.SuccessDataResult;
 import com.bayrak.hrms.core.utilities.results.SuccessResult;
-import com.bayrak.hrms.entity.concretes.JobTitle;
+import com.bayrak.hrms.entity.concretes.resume.JobTitle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

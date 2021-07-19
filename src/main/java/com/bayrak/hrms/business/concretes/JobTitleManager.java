@@ -3,7 +3,7 @@ package com.bayrak.hrms.business.concretes;
 
 import com.bayrak.hrms.business.abstracts.JobTitleService;
 import com.bayrak.hrms.dataAccess.abstracts.JobTitleDao;
-import com.bayrak.hrms.entity.concretes.JobTitle;
+import com.bayrak.hrms.entity.concretes.resume.JobTitle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

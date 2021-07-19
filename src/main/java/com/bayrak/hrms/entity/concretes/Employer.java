@@ -1,8 +1,6 @@
 package com.bayrak.hrms.entity.concretes;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +10,7 @@ import javax.persistence.Table;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name="employers")
 public class Employer extends User{

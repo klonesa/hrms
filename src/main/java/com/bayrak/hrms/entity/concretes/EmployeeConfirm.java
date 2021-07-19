@@ -2,6 +2,7 @@ package com.bayrak.hrms.entity.concretes;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +13,7 @@ import java.util.Date;
 @Entity
 @Table(name="employee_confirms")
 @NoArgsConstructor
+@AllArgsConstructor
 @Inheritance(strategy = InheritanceType.JOINED)
 public class EmployeeConfirm {
 

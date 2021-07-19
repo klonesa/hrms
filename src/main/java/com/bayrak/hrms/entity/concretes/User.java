@@ -1,14 +1,15 @@
 package com.bayrak.hrms.entity.concretes;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
+@EqualsAndHashCode(of = {"id","email"})
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity(name="users")
 @Table(name="users")
 @Inheritance(strategy = InheritanceType.JOINED)

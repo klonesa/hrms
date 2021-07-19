@@ -1,6 +1,7 @@
 package com.bayrak.hrms.entity.concretes;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +11,7 @@ import java.util.Date;
 @Data
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name="verification_codes")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class VerificationCode {

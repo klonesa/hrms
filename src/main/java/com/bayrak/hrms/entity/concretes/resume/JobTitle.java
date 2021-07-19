@@ -1,4 +1,4 @@
-package com.bayrak.hrms.entity.concretes;
+package com.bayrak.hrms.entity.concretes.resume;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

@@ -1,5 +1,6 @@
 package com.bayrak.hrms.entity.concretes;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -12,9 +13,10 @@ import java.util.Date;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name="employee_confirm_employers")
-@NoArgsConstructor
 public class EmployeeConfirmEmployer extends EmployeeConfirm {
 
     @ManyToOne

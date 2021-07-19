@@ -1,5 +1,6 @@
 package com.bayrak.hrms.entity.concretes;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -12,6 +13,7 @@ import javax.validation.constraints.NotBlank;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name="candidates")
 public class Candidate extends User {

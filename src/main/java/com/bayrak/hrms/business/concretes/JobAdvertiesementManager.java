@@ -9,7 +9,7 @@ import com.bayrak.hrms.dataAccess.abstracts.JobTitleDao;
 import com.bayrak.hrms.entity.concretes.City;
 import com.bayrak.hrms.entity.concretes.Employer;
 import com.bayrak.hrms.entity.concretes.JobAdvertisement;
-import com.bayrak.hrms.entity.concretes.JobTitle;
+import com.bayrak.hrms.entity.concretes.resume.JobTitle;
 import com.bayrak.hrms.entity.dto.jobAdvertisement.CloseJobAdvertisementByEmployerDto;
 import com.bayrak.hrms.entity.dto.jobAdvertisement.JobAdvertiesementDto;
 import com.bayrak.hrms.entity.dto.jobAdvertisement.postJobAdvertisementDto;

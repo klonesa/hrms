@@ -13,8 +13,8 @@ services:
     links:
       - hrms-pg-server
     environment:
-#      - PROFILE=docker
-      - "SPRING_PROFILES_ACTIVE=docker"
+      - PROFILE=docker  # calisti
+#      - "SPRING_PROFILES_ACTIVE=docker" # calisti
 
 
   hrms-pg-server:

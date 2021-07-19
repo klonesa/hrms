@@ -1,6 +1,6 @@
 package com.bayrak.hrms.business.abstracts;
 
-import com.bayrak.hrms.entity.concretes.JobTitle;
+import com.bayrak.hrms.entity.concretes.resume.JobTitle;
 
 import java.util.List;
 import java.util.Optional;
