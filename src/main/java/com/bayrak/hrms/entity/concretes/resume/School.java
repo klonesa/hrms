@@ -1,6 +1,7 @@
 package com.bayrak.hrms.entity.concretes.resume;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -32,7 +33,7 @@ public class School {
 
     @ManyToOne
     @JoinColumn(name = "resume_id")
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @JsonIgnore
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Resume resume;
 

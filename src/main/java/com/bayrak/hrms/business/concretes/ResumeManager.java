@@ -6,11 +6,13 @@ import com.bayrak.hrms.dataAccess.abstracts.*;
 import com.bayrak.hrms.entity.concretes.Candidate;
 import com.bayrak.hrms.entity.concretes.enums.SocialLink;
 import com.bayrak.hrms.entity.concretes.resume.*;
-import com.bayrak.hrms.entity.dto.resume.ResumeRequestDto;
+import com.bayrak.hrms.entity.dto.resume.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.*;
 
 @Service
@@ -20,21 +22,68 @@ public class ResumeManager implements ResumeService {
     private final ResumeDao resumeDao;
     private final CandidateDao candidateDao;
     private final ProgrammingLanguageDao programmingLanguageDao;
-    private final SchoolDao schoolDao;
-    private final ResumeLanguagLevelDao resumeLanguagLevelDao;
     private final LanguageDao languageDao;
     private final JobTitleDao jobTitleDao;
 
 
 
     @Override
-    public DataResult<Resume> getById(int id) {
-        Optional<Resume> result = resumeDao.findById(id);
-        if(result.isEmpty()){
+    public DataResult<ResumeResponseDto> getById(int id) {
+        if(resumeDao.findById(id).isEmpty()){
             return new ErrorDataResult<>("Resume not found");
         }
 
-        return new SuccessDataResult<>(result.get());
+        Resume resume = resumeDao.findById(id).get();
+
+        ResumeResponseDto result = ResumeResponseDto.builder()
+                .resumeId(resume.getId())
+                .coverLetter(resume.getCoverLetter())
+                .photoUrl(resume.getProfile_picture())
+                .build();
+
+        result.setCandidateId(resume.getCandidate().getId());
+
+        resume.getJobExperience().stream().forEach(
+                i-> {
+                    result.getJobExperiences().add(JobExperienceDto.builder()
+                            .CompanyName(i.getCompanyName())
+                            .startDate(i.getStartDate())
+                            .endDate(i.getEndDate())
+                            .build());
+                }
+        );
+
+        resume.getSchoolList().stream().forEach(
+                i -> {
+                    result.getSchoolDto().add(SchoolDto.builder()
+                            .name(i.getName())
+                            .isGraduated(i.isGraduated())
+                            .graduateDate(i.getGraduateDate())
+                            .build()
+                    );
+                }
+        );
+
+        result.setLinks(resume.getSocialLinks());
+
+        resume.getProgrammingLanguages().stream().forEach(
+                i-> {
+                    result.getProgammingLanguages().add(
+                            i.getName()
+                    );
+                }
+        );
+
+        resume.getResumeLanguageLevels().stream().forEach(
+                i-> {
+                    result.getLanguages().add(ResumeLanguageDto.builder()
+                            .language(i.getLanguage().getName())
+                            .level(i.getLanguageLevel().getValue())
+                            .build());
+                }
+        );
+
+        return new SuccessDataResult<>(result);
     }
 
     @Override
@@ -81,8 +130,6 @@ public class ResumeManager implements ResumeService {
                 }
         );
 
-
-
         resumeRequestDto.getSchoolList().forEach(
                 i -> {
                     School school = new School(i.getName(),resume);
@@ -93,7 +140,6 @@ public class ResumeManager implements ResumeService {
                     resume.getSchoolList().add(school);
                 }
         );
-
 
         resumeRequestDto.getProgrammingLanguages().stream().forEach(
                 i-> {
@@ -119,14 +165,12 @@ public class ResumeManager implements ResumeService {
                 }
         );
 
-
         if(resumeRequestDto.getPhotoUrl()!= null){
             resume.setProfile_picture(resumeRequestDto.getPhotoUrl());
         }
         if(resumeRequestDto.getJobExperienceList()!=null){
             resume.setJobExperience(resumeRequestDto.getJobExperienceList());
         }
-
         if(resumeRequestDto.getGithubLink()!= null){
             resume.getSocialLinks().put(SocialLink.GITHUB,
                     resumeRequestDto.getGithubLink());

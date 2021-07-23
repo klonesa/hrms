@@ -1,5 +1,6 @@
 package com.bayrak.hrms.entity.concretes;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
@@ -27,6 +28,7 @@ public class User {
 
     @NotBlank(message="password cannot be blank")
     @Column(name="password")
+    @JsonIgnore
     private String password;
 
     public User(String email, String password) {

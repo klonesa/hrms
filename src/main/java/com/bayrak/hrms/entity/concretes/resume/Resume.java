@@ -48,7 +48,7 @@ public class Resume {
     private Set<ResumeLanguageLevel> resumeLanguageLevels = new HashSet<>();
 
     @ElementCollection
-    @MapKeyColumn(name = "platform",unique = true)
+    @MapKeyColumn(name = "platform")
     @CollectionTable(name = "resume_social_links",joinColumns = @JoinColumn(name = "resume_id"))
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Map<SocialLink, String> socialLinks = new HashMap<>();
