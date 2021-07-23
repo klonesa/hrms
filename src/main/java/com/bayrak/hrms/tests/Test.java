@@ -3,15 +3,12 @@ package com.bayrak.hrms.tests;
 import com.bayrak.hrms.dataAccess.abstracts.CandidateDao;
 import com.bayrak.hrms.dataAccess.abstracts.JobTitleDao;
 import com.bayrak.hrms.dataAccess.abstracts.ResumeDao;
-import com.bayrak.hrms.entity.concretes.Candidate;
 import com.bayrak.hrms.entity.concretes.enums.LanguageLevel;
-import com.bayrak.hrms.entity.concretes.enums.SocialLink;
-import com.bayrak.hrms.entity.concretes.resume.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.Date;
+import java.util.stream.Stream;
 
 @Configuration
 public class Test {
@@ -20,7 +17,10 @@ public class Test {
     CommandLineRunner commandLineRunner(ResumeDao resumeDao, CandidateDao candidateDao, JobTitleDao jobTitleDao){
         return args -> {
 
-
+            System.out.println(Stream.of(LanguageLevel.values())
+                    .filter(c -> c.getValue() == 4)
+                    .findFirst()
+                    .orElseThrow(IllegalArgumentException::new));
 
 
 

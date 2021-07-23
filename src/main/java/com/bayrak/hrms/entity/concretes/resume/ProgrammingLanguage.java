@@ -2,16 +2,16 @@ package com.bayrak.hrms.entity.concretes.resume;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
+@EqualsAndHashCode(of = {"id","name"})
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Builder
 @Table(name = "programming_languages")
 public class ProgrammingLanguage {
 

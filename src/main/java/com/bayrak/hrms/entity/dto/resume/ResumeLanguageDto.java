@@ -9,5 +9,5 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode
 public class ResumeLanguageDto {
     private String language;
-    private int level;
+    private String level;
 }
