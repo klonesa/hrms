@@ -1,8 +1,5 @@
 package com.bayrak.hrms.entity.convertors.convertorImpl;
 
-import com.bayrak.hrms.dataAccess.abstracts.JobTitleDao;
-import com.bayrak.hrms.dataAccess.abstracts.LanguageDao;
-import com.bayrak.hrms.dataAccess.abstracts.ProgrammingLanguageDao;
 import com.bayrak.hrms.entity.concretes.enums.converters.LanguageLevelConverter;
 import com.bayrak.hrms.entity.concretes.resume.*;
 import com.bayrak.hrms.entity.convertors.Convertor;
@@ -13,25 +10,19 @@ import com.bayrak.hrms.entity.dto.resume.SchoolDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import static com.bayrak.hrms.entity.dto.resume.ResumeDto.builder;
 
 @Component
 @RequiredArgsConstructor
 public class ConvertResume implements Convertor<Resume, ResumeDto> {
 
     private final LanguageLevelConverter languageLevelConverter;
-    private final LanguageDao languageDao;
-    private final ProgrammingLanguageDao programmingLanguageDao;
-    private final JobTitleDao jobTitleDao;
-
 
     @Override
     public ResumeDto convertEntityToDto(Resume resume) {
 
-        ResumeDto result = builder()
+        ResumeDto result = ResumeDto.builder()
                 .resumeId(resume.getId())
                 .coverLetter(resume.getCoverLetter())
-                .photoUrl(resume.getProfile_picture())
                 .build();
 
         result.setCandidateId(resume.getCandidate().getId());
@@ -69,6 +60,11 @@ public class ConvertResume implements Convertor<Resume, ResumeDto> {
                         .level(languageLevelConverter.convertToDatabaseColumn(i.getLanguageLevel()))
                         .build())
         );
+
+        if(resume.getPhoto()!=null && resume.getPhoto().getPhotoUrl()!=null){
+            result.setPhotoUrl(resume.getPhoto().getPhotoUrl());
+        }
+
         return result;
     }
 
@@ -125,9 +121,6 @@ public class ConvertResume implements Convertor<Resume, ResumeDto> {
                 (k, v) -> resume.getSocialLinks().put(k, v)
         );
 
-        if(resumeDto.getPhotoUrl()!= null){
-            resume.setProfile_picture(resumeDto.getPhotoUrl());
-        }
         if(resumeDto.getCoverLetter()!= null){
             resume.setCoverLetter(resumeDto.getCoverLetter());
         }
@@ -135,85 +128,4 @@ public class ConvertResume implements Convertor<Resume, ResumeDto> {
         return resume;
     }
 
-/*    @Override
-    public Resume convertDtoToEntity(ResumeDto resumeDto) {
-
-        Resume resume = new Resume();
-
-        resumeDto.getLanguages().forEach(
-                i ->{
-                    if (languageDao.existsByName(i.getLanguage())) {
-                        Language language = languageDao.findByName(i.getLanguage());
-                        resume.getResumeLanguageLevels().add(ResumeLanguageLevel.builder()
-                                .language(language)
-                                .resume(resume)
-                                .languageLevel(languageLevelConverter
-                                        .convertToEntityAttribute(i.getLevel()))
-                                .build());
-                    }else{
-                        resume.getResumeLanguageLevels().add(ResumeLanguageLevel.builder()
-                                .resume(resume)
-                                .language(Language.builder()
-                                        .name(i.getLanguage())
-                                        .build())
-                                .languageLevel(languageLevelConverter
-                                        .convertToEntityAttribute(i.getLevel()))
-                                .build());
-                    }
-                }
-        );
-
-        resumeDto.getSchools().forEach(
-                i -> {
-                    School school = new School(i.getName(),resume);
-                    if (i.isGraduated() && i.getGraduateDate()!= null) {
-                        school.setGraduated(true);
-                        school.setGraduateDate(i.getGraduateDate());
-                    }
-                    resume.getSchoolList().add(school);
-                }
-        );
-
-        resumeDto.getProgammingLanguages().forEach(
-                i-> {
-                    if(programmingLanguageDao.existsByName(i)){
-                        resume.getProgrammingLanguages().add(programmingLanguageDao.findByName(i));
-                    }else{
-                        ProgrammingLanguage programmingLanguage = new ProgrammingLanguage();
-                        programmingLanguage.setName(i);
-                        resume.getProgrammingLanguages().add(programmingLanguage);
-                    }
-                }
-        );
-
-        resumeDto.getJobExperiences().forEach(
-                i-> {
-                    JobExperience je =  JobExperience.builder()
-                            .companyName(i.getCompanyName())
-                            .startDate(i.getStartDate())
-                            .endDate(i.getEndDate())
-                            .resume(resume)
-                            .build();
-                    if (jobTitleDao.existsByTitle(i.getJobTitle())) {
-                        je.setJobTitle(jobTitleDao.findByTitle(i.getJobTitle()));
-                    }else{
-                        je.setJobTitle(new JobTitle(i.getJobTitle()));
-                    }
-                    resume.getJobExperience().add(je);
-                }
-        );
-
-        resumeDto.getLinks().forEach(
-                (k, v) -> resume.getSocialLinks().put(k, v)
-        );
-
-        if(resumeDto.getPhotoUrl()!= null){
-            resume.setProfile_picture(resumeDto.getPhotoUrl());
-        }
-        if(resumeDto.getCoverLetter()!= null){
-            resume.setCoverLetter(resumeDto.getCoverLetter());
-        }
-
-        return resume;
-    }*/
 }

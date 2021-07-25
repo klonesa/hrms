@@ -1,12 +1,16 @@
 package com.bayrak.hrms.business.concretes;
 
 import com.bayrak.hrms.business.abstracts.ResumeService;
+import com.bayrak.hrms.core.utilities.cloudinary.UploadImage;
 import com.bayrak.hrms.core.utilities.results.*;
-import com.bayrak.hrms.dataAccess.abstracts.*;
+import com.bayrak.hrms.dataAccess.abstracts.CandidateDao;
+import com.bayrak.hrms.dataAccess.abstracts.LanguageDao;
+import com.bayrak.hrms.dataAccess.abstracts.ProgrammingLanguageDao;
+import com.bayrak.hrms.dataAccess.abstracts.ResumeDao;
 import com.bayrak.hrms.entity.concretes.Candidate;
+import com.bayrak.hrms.entity.concretes.ResumePhoto;
 import com.bayrak.hrms.entity.concretes.enums.converters.LanguageLevelConverter;
 import com.bayrak.hrms.entity.concretes.resume.Language;
-import com.bayrak.hrms.entity.concretes.resume.ProgrammingLanguage;
 import com.bayrak.hrms.entity.concretes.resume.Resume;
 import com.bayrak.hrms.entity.concretes.resume.ResumeLanguageLevel;
 import com.bayrak.hrms.entity.convertors.convertorImpl.ConvertResume;
@@ -15,8 +19,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -30,7 +36,7 @@ public class ResumeManager implements ResumeService {
     private final LanguageDao languageDao;
     private final LanguageLevelConverter languageLevelConverter;
     private final ProgrammingLanguageDao programmingLanguageDao;
-    private final JobTitleDao jobTitleDao;
+    private final UploadImage uploadImage;
 
     @Override
     public DataResult<ResumeDto> getById(int id) {
@@ -75,8 +81,8 @@ public class ResumeManager implements ResumeService {
         resume.setResumeLanguageLevels(
             resume.getResumeLanguageLevels().stream().map(
                     i-> {
-                        if (languageDao.existsByName(i.getLanguage().getName())) {
-                            Language language = languageDao.findByName(i.getLanguage().getName());
+                        if (languageDao.existsByNameIgnoreCase(i.getLanguage().getName())) {
+                            Language language = languageDao.findByNameIgnoreCase(i.getLanguage().getName());
                             return ResumeLanguageLevel.builder()
                                     .language(language)
                                     .resume(resume)
@@ -93,13 +99,24 @@ public class ResumeManager implements ResumeService {
         resume.setProgrammingLanguages(
             resume.getProgrammingLanguages().stream().map(
                     i -> {
-                        if(programmingLanguageDao.existsByName(i.getName())){
-                            return programmingLanguageDao.findByName(i.getName());
+                        if(programmingLanguageDao.existsByNameIgnoreCase(i.getName())){
+                            return programmingLanguageDao.findByNameIgnoreCase(i.getName());
                         }
                        return i;
                     }
             ).collect(Collectors.toSet())
         );
+
+        if (resumeDto.getPhotoUri() != null) {
+            try {
+                final Map upload = uploadImage.upload(resumeDto.getPhotoUri());
+                final String photoUrl = (String) upload.get("secure_url");
+                resume.setPhoto(ResumePhoto.builder().photoUrl(photoUrl).build());
+            } catch (IOException e) {
+                e.printStackTrace();
+                return new ErrorDataResult<>(e.getMessage());
+            }
+        }
 
         resumeDao.save(resume);
         return new SuccessResult();

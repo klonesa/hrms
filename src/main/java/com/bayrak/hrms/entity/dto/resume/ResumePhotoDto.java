@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ResumeLanguageLevelDto {
-    private String language;
-    private String languageLevel;
+public class ResumePhotoDto {
+    private int resumeId;
+    private String photoUri;
 }

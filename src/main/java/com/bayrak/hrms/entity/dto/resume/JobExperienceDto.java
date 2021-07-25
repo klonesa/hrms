@@ -5,8 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.persistence.Access;
-import javax.persistence.AccessType;
 import java.util.Date;
 
 @Data

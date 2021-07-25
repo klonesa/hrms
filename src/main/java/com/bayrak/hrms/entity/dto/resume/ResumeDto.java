@@ -1,6 +1,7 @@
 package com.bayrak.hrms.entity.dto.resume;
 
 import com.bayrak.hrms.entity.concretes.enums.SocialLink;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
@@ -38,6 +39,10 @@ public class ResumeDto {
     @Builder.Default
     private Set<String> progammingLanguages = new HashSet<>();
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String photoUri;
+
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String photoUrl;
 
     private String coverLetter;

@@ -2,6 +2,7 @@ package com.bayrak.hrms.entity.concretes.resume;
 
 
 import com.bayrak.hrms.entity.concretes.Candidate;
+import com.bayrak.hrms.entity.concretes.ResumePhoto;
 import com.bayrak.hrms.entity.concretes.enums.SocialLink;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -57,11 +58,14 @@ public class Resume {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Set<ProgrammingLanguage> programmingLanguages = new HashSet<>();
 
-    private String profile_picture;
 
     @Lob
     @Column(name = "cover_letter")
     private String coverLetter;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "photo_id")
+    private ResumePhoto photo;
 
     public Resume(Candidate candidate, String coverLetter) {
         this.candidate = candidate;

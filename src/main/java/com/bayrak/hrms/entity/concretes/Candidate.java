@@ -1,5 +1,6 @@
 package com.bayrak.hrms.entity.concretes;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -28,6 +29,7 @@ public class Candidate extends User {
 
     @NotBlank(message="Identity cannot be blank")
     @Column(name="identity_number")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String identityNumber;
 
     @NotBlank(message="Birth year cannot be blank")

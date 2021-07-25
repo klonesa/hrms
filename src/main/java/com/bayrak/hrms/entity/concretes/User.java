@@ -26,6 +26,7 @@ public class User {
     @Column(name="email")
     private String email;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @NotBlank(message="password cannot be blank")
     @Column(name="password")
     @JsonIgnore

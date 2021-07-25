@@ -4,7 +4,7 @@ import com.bayrak.hrms.entity.concretes.resume.ProgrammingLanguage;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ProgrammingLanguageDao extends JpaRepository<ProgrammingLanguage, Integer> {
-    boolean existsByName(String name);
+    boolean existsByNameIgnoreCase(String name);
 
-    ProgrammingLanguage findByName(String name);
+    ProgrammingLanguage findByNameIgnoreCase(String name);
 }

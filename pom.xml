@@ -11,7 +11,6 @@
 	<groupId>com.bayrak</groupId>
 	<artifactId>hrms</artifactId>
 	<version>1.0.0</version>
-	<name>hrms</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>15</java.version>
@@ -80,6 +79,16 @@
 			<version>1</version>
 			<systemPath>${project.basedir}/easywsdl/ksoap/ExKsoapandroiad/1/ExKsoapandroiad-1.jar</systemPath>
 		</dependency>
+		<dependency>
+			<groupId>com.cloudinary</groupId>
+			<artifactId>cloudinary-http44</artifactId>
+			<version>1.29.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -94,7 +103,7 @@
 							<artifactId>lombok</artifactId>
 						</exclude>
 					</excludes>
-					<finalName>hrms-postgres</finalName>
+					<finalName>hrms</finalName>
 				</configuration>
 			</plugin>
 		</plugins>

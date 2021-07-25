@@ -1,5 +1,5 @@
 FROM adoptopenjdk
-ADD target/hrms-postgres.jar hrms.jar
+ADD target/hrms.jar hrms.jar
 ENV PROFILE=docker
 EXPOSE 8080
 #ENTRYPOINT ["java","-Dspring.profiles.active=$PROFILE","-jar","hrms.jar"] #calismadi
