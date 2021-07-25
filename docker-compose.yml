@@ -1,5 +1,4 @@
 version: '3.1'
-
 services:
   app:
     container_name: springboot-postgresql
@@ -13,9 +12,10 @@ services:
     links:
       - hrms-pg-server
     environment:
-      - PROFILE=docker  # calisti
-#      - "SPRING_PROFILES_ACTIVE=docker" # calisti
-
+      - PROFILE=docker
+      - CLOUDINARY_CLOUD_NAME=your-cloud-name
+      - CLOUDINARY_API_KEY=yourapikey
+      - CLOUDINARY_API_SECRET=yourapisecret
 
   hrms-pg-server:
     restart: always

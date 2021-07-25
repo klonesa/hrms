@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import javax.validation.constraints.NotNull;
 
 @Configuration
-public class Config {
+public class AppConfig {
 
     @Value("${cloudinary.cloud-name}")
     @NotNull private String cloudName;

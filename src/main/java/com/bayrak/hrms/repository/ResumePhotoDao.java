@@ -1,8 +1,7 @@
-package com.bayrak.hrms.dataAccess.abstracts;
+package com.bayrak.hrms.repository;
 
 import com.bayrak.hrms.entity.concretes.ResumePhoto;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 

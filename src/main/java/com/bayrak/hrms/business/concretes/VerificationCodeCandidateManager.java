@@ -2,8 +2,8 @@ package com.bayrak.hrms.business.concretes;
 
 import com.bayrak.hrms.business.abstracts.VerificationCodeCandidateService;
 import com.bayrak.hrms.core.utilities.results.*;
-import com.bayrak.hrms.dataAccess.abstracts.CandidateDao;
-import com.bayrak.hrms.dataAccess.abstracts.VerificationCodeCandidateDao;
+import com.bayrak.hrms.repository.CandidateDao;
+import com.bayrak.hrms.repository.VerificationCodeCandidateDao;
 import com.bayrak.hrms.entity.concretes.Candidate;
 import com.bayrak.hrms.entity.concretes.VerificationCodeCandidate;
 import org.springframework.beans.factory.annotation.Autowired;

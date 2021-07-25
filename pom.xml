@@ -11,6 +11,7 @@
 	<groupId>com.bayrak</groupId>
 	<artifactId>hrms</artifactId>
 	<version>1.0.0</version>
+	<name>hrms</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>15</java.version>

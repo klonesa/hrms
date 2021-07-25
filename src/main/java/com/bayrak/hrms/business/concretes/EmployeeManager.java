@@ -2,7 +2,7 @@ package com.bayrak.hrms.business.concretes;
 
 import com.bayrak.hrms.business.abstracts.EmployeeService;
 import com.bayrak.hrms.core.utilities.results.*;
-import com.bayrak.hrms.dataAccess.abstracts.EmployeeDao;
+import com.bayrak.hrms.repository.EmployeeDao;
 import com.bayrak.hrms.entity.concretes.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

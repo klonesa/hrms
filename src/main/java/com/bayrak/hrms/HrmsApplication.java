@@ -1,6 +1,6 @@
 package com.bayrak.hrms;
 
-import com.bayrak.hrms.config.Config;
+import com.bayrak.hrms.config.AppConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -17,7 +17,7 @@ public class HrmsApplication {
 
 	public static void main(String[] args) {
 		ConfigurableApplicationContext run = SpringApplication.run(HrmsApplication.class, args);
-		Config config = run.getBean(Config.class);
+		AppConfig appConfig = run.getBean(AppConfig.class);
 	}
 
 	@Bean

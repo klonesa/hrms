@@ -2,8 +2,8 @@ package com.bayrak.hrms.business.concretes;
 
 import com.bayrak.hrms.business.abstracts.VerificationCodeEmployerService;
 import com.bayrak.hrms.core.utilities.results.*;
-import com.bayrak.hrms.dataAccess.abstracts.EmployerDao;
-import com.bayrak.hrms.dataAccess.abstracts.VerificationCodeEmployerDao;
+import com.bayrak.hrms.repository.EmployerDao;
+import com.bayrak.hrms.repository.VerificationCodeEmployerDao;
 import com.bayrak.hrms.entity.concretes.Employer;
 import com.bayrak.hrms.entity.concretes.VerificationCodeEmployer;
 import org.springframework.beans.factory.annotation.Autowired;

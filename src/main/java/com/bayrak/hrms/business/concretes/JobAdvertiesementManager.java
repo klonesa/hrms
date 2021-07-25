@@ -2,10 +2,10 @@ package com.bayrak.hrms.business.concretes;
 
 import com.bayrak.hrms.business.abstracts.JobAdvertiesementService;
 import com.bayrak.hrms.core.utilities.results.*;
-import com.bayrak.hrms.dataAccess.abstracts.CityDao;
-import com.bayrak.hrms.dataAccess.abstracts.EmployerDao;
-import com.bayrak.hrms.dataAccess.abstracts.JobAdvertiesementDao;
-import com.bayrak.hrms.dataAccess.abstracts.JobTitleDao;
+import com.bayrak.hrms.repository.CityDao;
+import com.bayrak.hrms.repository.EmployerDao;
+import com.bayrak.hrms.repository.JobAdvertiesementDao;
+import com.bayrak.hrms.repository.JobTitleDao;
 import com.bayrak.hrms.entity.concretes.City;
 import com.bayrak.hrms.entity.concretes.Employer;
 import com.bayrak.hrms.entity.concretes.JobAdvertisement;

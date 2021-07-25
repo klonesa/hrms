@@ -4,7 +4,7 @@ import com.bayrak.hrms.business.abstracts.CandidateService;
 import com.bayrak.hrms.business.abstracts.VerificationCodeCandidateService;
 import com.bayrak.hrms.business.abstracts.VerifyService;
 import com.bayrak.hrms.core.utilities.results.Result;
-import com.bayrak.hrms.dataAccess.abstracts.CandidateDao;
+import com.bayrak.hrms.repository.CandidateDao;
 import com.bayrak.hrms.entity.concretes.Candidate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

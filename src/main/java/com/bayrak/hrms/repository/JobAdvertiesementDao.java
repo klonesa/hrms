@@ -1,4 +1,4 @@
-package com.bayrak.hrms.dataAccess.abstracts;
+package com.bayrak.hrms.repository;
 
 import com.bayrak.hrms.entity.concretes.JobAdvertisement;
 import com.bayrak.hrms.entity.dto.jobAdvertisement.JobAdvertiesementDto;

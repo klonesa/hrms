@@ -4,7 +4,7 @@ import com.bayrak.hrms.business.abstracts.VerifyService;
 import com.bayrak.hrms.core.utilities.results.ErrorResult;
 import com.bayrak.hrms.core.utilities.results.Result;
 import com.bayrak.hrms.core.utilities.results.SuccessResult;
-import com.bayrak.hrms.dataAccess.abstracts.EmployerDao;
+import com.bayrak.hrms.repository.EmployerDao;
 import com.bayrak.hrms.entity.concretes.Employer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

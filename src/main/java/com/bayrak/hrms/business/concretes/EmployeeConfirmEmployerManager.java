@@ -6,7 +6,7 @@ import com.bayrak.hrms.business.abstracts.EmployerService;
 import com.bayrak.hrms.core.utilities.results.ErrorResult;
 import com.bayrak.hrms.core.utilities.results.Result;
 import com.bayrak.hrms.core.utilities.results.SuccessResult;
-import com.bayrak.hrms.dataAccess.abstracts.EmployeeConfirmEmployerDao;
+import com.bayrak.hrms.repository.EmployeeConfirmEmployerDao;
 import com.bayrak.hrms.entity.concretes.Employee;
 import com.bayrak.hrms.entity.concretes.EmployeeConfirmEmployer;
 import com.bayrak.hrms.entity.concretes.Employer;
