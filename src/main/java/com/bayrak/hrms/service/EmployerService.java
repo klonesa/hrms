@@ -16,15 +16,20 @@ import java.util.stream.Collectors;
 public class EmployerService {
 
     private final EmployerDao employerDao;
-    private final VerificationCodeEmployerService verificationCodeEmployerService;
     private final VerifyEmployerService verifyEmployerService;
     private final EmployerConvertor employerConvertor;
+    private final VerificationCodeEmployerService verificationCodeEmployerService;
 
     public void save(EmployerDto employerDto) {
         final Employer employer = employerConvertor.DtoToEntity(employerDto);
         verifyEmployerService.verify(employer);
         employerDao.save(employer);
-        verificationCodeEmployerService.generateCode(employer.getId());
+        generateCode(employer.getId());
+    }
+
+    public String generateCode(int employerId) {
+        return verificationCodeEmployerService
+                .generateCode(employerId,findById(employerId));
     }
 
     public List<EmployerDto> findAll() {
@@ -32,13 +37,19 @@ public class EmployerService {
               .collect(Collectors.toList());
     }
 
-    public Employer findById(int id) {
-        return employerDao.findById(id).orElseThrow(()-> {
+    public EmployerDto findByIdConvertDto(int id) {
+        return employerConvertor.EntityToDto(employerDao.findById(id).orElseThrow(()-> {
             throw new EmployerNotFoundException(id);
-        });
+        }));
     }
 
     public boolean existsById(int employerId) {
         return employerDao.existsById(employerId);
+    }
+
+    protected Employer findById(int id) {
+        return employerDao.findById(id).orElseThrow(()-> {
+            throw new EmployerNotFoundException(id);
+        });
     }
 }

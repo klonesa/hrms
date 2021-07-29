@@ -1,5 +1,8 @@
 package com.bayrak.hrms.service;
 
+import com.bayrak.hrms.exception.CandidateNotFoundException;
+import com.bayrak.hrms.exception.EmployerNotFoundException;
+import com.bayrak.hrms.exception.VerificationCodeMisMatchException;
 import com.bayrak.hrms.model.Employer;
 import com.bayrak.hrms.model.VerificationCodeEmployer;
 import com.bayrak.hrms.repository.EmployerDao;
@@ -16,64 +19,51 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class VerificationCodeEmployerService {
 
+
     private final VerificationCodeEmployerDao verificationCodeEmployerDao;
-    private final EmployerDao employerDao;
 
-    public DataResult<String> generateCode(int employerId) {
-
-        if (!employerDao.existsById(employerId)) {
-            return new ErrorDataResult("Employer not found");
-        }
-
-        Employer employer = employerDao.getById(employerId);
-
-        Optional<VerificationCodeEmployer> ovce=
-                verificationCodeEmployerDao.findByEmployerId(employerId);
+    public String generateCode(int employerId, Employer employer) {
 
         String code = UUID.randomUUID().toString();
 
-        if(ovce.isEmpty()){
-            verificationCodeEmployerDao.save(
-                    new VerificationCodeEmployer(code ,
-                            employer));
-            return new SuccessDataResult<>(code);
-        }
-            ovce.get().setCode(code);
-            verificationCodeEmployerDao.save(ovce.get());
-        return new SuccessDataResult<>(code);
+        verificationCodeEmployerDao.findByEmployerId(employerId)
+                .ifPresentOrElse(
+                        i -> {
+                            i.setCode(code);
+                        },() -> {
+                            verificationCodeEmployerDao.save(
+                                    new VerificationCodeEmployer(
+                                            code,employer
+                                    ));
+                        }
+                );
+        return code;
     }
 
-    public DataResult<String> getLastCode(int employerId) {
-        Optional<VerificationCodeEmployer> vce =
-                verificationCodeEmployerDao.findByEmployerId(employerId);
-        if(vce.isPresent()){
-            return new SuccessDataResult<>(vce.get().getCode());
-        }
+    public String getLastCode(int employerId) {
 
-       return new ErrorDataResult("Employer not found");
+        return verificationCodeEmployerDao.findByEmployerId(employerId)
+                .orElseThrow(() -> {
+                    throw new EmployerNotFoundException(employerId);
+                }).getCode();
     }
 
-    public Result verify(int employerId,String code) {
+    public void verify(int employerId,String code) {
+        String code2 = getLastCode(employerId);
 
-        if(!getLastCode(employerId).isSuccess()){
-            generateCode(employerId);
-        }
-        String code2 = getLastCode(employerId).getData();
-
-        Optional<VerificationCodeEmployer> ovce = verificationCodeEmployerDao.findByEmployerId(employerId);
-
-        if(ovce.isEmpty()){
-            return new ErrorResult("Employer not found");
-        }
-
-        VerificationCodeEmployer vce = ovce.get();
-        vce.setVerified(true);
-        vce.setVerifiedDate(new Date());
-        if(code2.equals(code)){
-            verificationCodeEmployerDao.save(vce);
-            return new SuccessResult("Employer validated successfully");
-        }
-        return new ErrorResult("Verification code doesn't match");
+        verificationCodeEmployerDao.findByEmployerId(employerId)
+            .ifPresentOrElse(
+                    i -> {
+                        if (code2.equals(code)) {
+                            i.setVerified(true);
+                            i.setVerifiedDate(new Date());
+                            verificationCodeEmployerDao.save(i);
+                        }else{
+                            throw new VerificationCodeMisMatchException(code);
+                        }
+                    },() -> {
+                        throw new EmployerNotFoundException(employerId);
+                    });
     }
 
 }

@@ -47,12 +47,4 @@ public class School {
         this.name = name;
         this.resume = resume;
     }
-
-    public School(String name, Resume resume, Date graduateDate) {
-        this.name = name;
-        this.resume = resume;
-        this.graduateDate = graduateDate;
-        this.isGraduated = true;
-    }
-
 }

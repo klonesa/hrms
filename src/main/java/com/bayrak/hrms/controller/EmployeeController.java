@@ -1,6 +1,6 @@
 package com.bayrak.hrms.controller;
 
-import com.bayrak.hrms.model.Employee;
+import com.bayrak.hrms.dto.EmployeeDto;
 import com.bayrak.hrms.service.EmployeeService;
 import com.bayrak.hrms.utils.results.DataResult;
 import com.bayrak.hrms.utils.results.Result;
@@ -22,44 +22,30 @@ public class EmployeeController {
     }
 
     @GetMapping
-    public DataResult<List<Employee>> getAll(){
+    public DataResult<List<EmployeeDto>> getAll(){
         return new SuccessDataResult<>(employeeService.findAll());
     }
 
     @GetMapping("{id}")
-    public DataResult<Employee> getById(@PathVariable int id) {
+    public DataResult<EmployeeDto> getById(@PathVariable int id) {
         return new SuccessDataResult<>(employeeService.findById(id));
     }
 
     @PostMapping
     @ResponseStatus(value = HttpStatus.CREATED)
-    public Result put(@RequestBody Employee employee){
-        employeeService.save(employee);
-        return new SuccessResult();
+    public Result put(@RequestBody EmployeeDto employeeDto){
+        return new SuccessDataResult<>(employeeService.save(employeeDto));
     }
 
     @PutMapping("{id}")
     @ResponseStatus(value = HttpStatus.CREATED)
-    Result replaceEmployee(@RequestBody Employee newEmployee,
-                             @PathVariable int id) {
-
-        return employeeService.findByIdOptional(id)
-                .map(employee -> {
-                    employee.setEmail(newEmployee.getEmail());
-                    employee.setFirstName(newEmployee.getFirstName());
-                    employee.setLastName(newEmployee.getLastName());
-                    employee.setPassword(newEmployee.getPassword());
-                    return employeeService.save(employee);
-                })
-                .orElseGet(() -> {
-                    newEmployee.setId(id);
-                    return employeeService.save(newEmployee);
-                });
+    Result replaceEmployee(@RequestBody EmployeeDto newEmployee, @PathVariable int id) {
+        return new SuccessDataResult<>(employeeService.replaceEmployee(newEmployee, id));
     }
 
     @DeleteMapping("{id}")
     public Result deleteEmployee(@PathVariable int id) {
-        return employeeService.deleteById(id);
+        employeeService.deleteById(id);
+        return new SuccessResult();
     }
-
 }

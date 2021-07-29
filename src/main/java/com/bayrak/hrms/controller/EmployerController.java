@@ -31,7 +31,7 @@ public class EmployerController {
 
     @GetMapping("{id}")
     public Result getById(@PathVariable int id){
-        return new SuccessDataResult<>(employerService.findById(id));
+        return new SuccessDataResult<>(employerService.findByIdConvertDto(id));
     }
 
     @PostMapping

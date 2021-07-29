@@ -28,8 +28,13 @@ public class CandidateService {
         final Candidate candidate = candidateConverter.DtoToEntity(candidateDto);
         candidateVerifyService.verify(candidate);
         candidateDao.save(candidate);
-        verificationCodeCandidateService.generateCode(candidate.getId());
+        generateCode(candidate.getId());
         return new SuccessDataResult<>(candidateDto,candidateDto.getFirstName() + " created succesfully");
+    }
+
+    public String generateCode(int candidateId) {
+        return verificationCodeCandidateService
+                .generateCode(candidateId,findById(candidateId));
     }
 
     public List<CandidateDto> findAll() {

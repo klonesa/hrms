@@ -27,7 +27,7 @@ public class JobAdvertiesementService {
     private final CityService cityService;
     private final EmployerService employerService;
 
-    public Result closeAdvertisementByEmployer(CloseJobAdvertisementByEmployerDto dto) {
+    public void closeAdvertisementByEmployer(CloseJobAdvertisementByEmployerDto dto) {
 
         if (!employerService.existsById(dto.getEmployerId())){
             throw new EmployerNotFoundException(dto.getEmployerId());
@@ -48,12 +48,10 @@ public class JobAdvertiesementService {
                     throw new JobAdvertisementNotFoundException("Job advertisement not found ," +
                             " id : " + dto.getJobAdvertisementId());
                 });
-
-        return new SuccessResult("Job advertisement closed");
     }
 
-    public JobAdvertisement save(postJobAdvertisementDto dto) {
-        return jobAdvertiesementDao.save(new JobAdvertisement(
+    public JobAdvertiesementDto save(postJobAdvertisementDto dto) {
+            jobAdvertiesementDao.save(new JobAdvertisement(
                 jobTitleService.findById(dto.getJobTitleId()),
                 dto.getDescription(),
                 cityService.findById(dto.getCityId()),
@@ -62,6 +60,7 @@ public class JobAdvertiesementService {
                 dto.getOpenPositionNumber(),
                 dto.getCloseDate(),
                 employerService.findById(dto.getEmployerId())));
+            return null;
     }
 
     public List<JobAdvertisement> getAll() {

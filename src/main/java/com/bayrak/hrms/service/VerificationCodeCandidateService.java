@@ -15,21 +15,20 @@ import java.util.*;
 public class VerificationCodeCandidateService {
 
     private final VerificationCodeCandidateDao verificationCodeCandidateDao;
-    private final CandidateService candidateService;
 
-    public String generateCode(int candidateId) {
+    protected String generateCode(int candidateId,Candidate candidate) {
 
         String code = UUID.randomUUID().toString();
 
         verificationCodeCandidateDao.findByCandidateId(candidateId).ifPresentOrElse(
                 i -> {
-                    i.setCode(UUID.randomUUID().toString());
+                    i.setCode(code);
                     verificationCodeCandidateDao.save(i);
                 },
                 () -> {
                     verificationCodeCandidateDao.save(
                             new VerificationCodeCandidate(code ,
-                                    candidateService.findById(candidateId)));
+                                    candidate));
                 }
         );
         return code;

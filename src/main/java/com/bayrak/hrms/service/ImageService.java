@@ -26,7 +26,7 @@ public class ImageService {
         }
     }
 
-    public Resume uploadImageToResume(String photoUri, Resume resume){
+    protected Resume uploadImageToResume(String photoUri, Resume resume){
         Map upload = uploadImage(photoUri);
         resume.setPhoto(ResumePhoto.builder()
                 .photoUrl((String) upload.get("secure_url"))
@@ -38,7 +38,7 @@ public class ImageService {
         return resume;
     }
 
-    public void deleteImage(ResumePhoto resumePhoto) {
+    protected void deleteImage(ResumePhoto resumePhoto) {
         try {
             cloudinary.uploader().destroy(resumePhoto.getPublicId(), ObjectUtils.emptyMap());
         } catch (IOException e) {
@@ -46,7 +46,4 @@ public class ImageService {
             throw new UploadImageErrorException("An error occured when deleting image : " + e.getMessage());
         }
     }
-
-
-
 }

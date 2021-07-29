@@ -3,24 +3,24 @@ package com.bayrak.hrms.controller;
 
 import com.bayrak.hrms.dto.IdDto;
 import com.bayrak.hrms.dto.VerificationCodeDto;
+import com.bayrak.hrms.service.CandidateService;
 import com.bayrak.hrms.service.VerificationCodeCandidateService;
 import com.bayrak.hrms.utils.results.DataResult;
 import com.bayrak.hrms.utils.results.Result;
 import com.bayrak.hrms.utils.results.SuccessDataResult;
 import com.bayrak.hrms.utils.results.SuccessResult;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/verification/candidate")
 public class VerificationCodeCandidateController {
 
     private final VerificationCodeCandidateService verificationCodeCandidateService;
+    private final CandidateService candidateService;
 
-    @Autowired
-    public VerificationCodeCandidateController(VerificationCodeCandidateService verificationCodeCandidateService) {
-        this.verificationCodeCandidateService = verificationCodeCandidateService;
-    }
 
     @GetMapping("{id}")
     public DataResult<String> getCode(@PathVariable int id) {
@@ -31,7 +31,7 @@ public class VerificationCodeCandidateController {
     public DataResult<String> generateCode(@RequestBody IdDto id){
 
         return new SuccessDataResult<>(
-                verificationCodeCandidateService.generateCode(id.getId()));
+                candidateService.generateCode(id.getId()));
     }
 
     @PostMapping("/verify")
@@ -40,6 +40,4 @@ public class VerificationCodeCandidateController {
                 .verify(verificationCodeDto.getId(), verificationCodeDto.getCode());
         return new SuccessResult();
     }
-
-
 }

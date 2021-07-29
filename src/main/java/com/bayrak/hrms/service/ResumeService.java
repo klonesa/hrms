@@ -9,8 +9,6 @@ import com.bayrak.hrms.model.resume.Language;
 import com.bayrak.hrms.model.resume.Resume;
 import com.bayrak.hrms.model.resume.ResumeLanguageLevel;
 import com.bayrak.hrms.model.resume.ResumePhoto;
-import com.bayrak.hrms.repository.LanguageDao;
-import com.bayrak.hrms.repository.ProgrammingLanguageDao;
 import com.bayrak.hrms.repository.ResumeDao;
 import com.bayrak.hrms.dto.convertor.LanguageLevelConverter;
 import com.bayrak.hrms.dto.convertor.ConvertResume;
@@ -28,11 +26,11 @@ public class ResumeService {
 
     private final ResumeDao resumeDao;
     private final CandidateService candidateService;
-    private final LanguageDao languageDao;
-    private final ConvertResume convertResume;
-    private final LanguageLevelConverter languageLevelConverter;
-    private final ProgrammingLanguageDao programmingLanguageDao;
+    private final LanguageService languageService;
+    private final ProgrammingLanguageService programmingLanguageService;
     private final ImageService imageService;
+    private final LanguageLevelConverter languageLevelConverter;
+    private final ConvertResume convertResume;
 
     public ResumeDto findByIdConverDto(int id) {
         return convertResume.EntityToDto(resumeDao.findById(id).orElseThrow(
@@ -64,8 +62,8 @@ public class ResumeService {
         resume.setResumeLanguageLevels(
             resume.getResumeLanguageLevels().stream().map(
                     i-> {
-                        if (languageDao.existsByNameIgnoreCase(i.getLanguage().getName())) {
-                            Language language = languageDao.findByNameIgnoreCase(i.getLanguage().getName());
+                        if (languageService.existsByNameIgnoreCase(i.getLanguage().getName())) {
+                            Language language = languageService.findByNameIgnoreCase(i.getLanguage().getName());
                             return ResumeLanguageLevel.builder()
                                     .language(language)
                                     .resume(resume)
@@ -82,8 +80,8 @@ public class ResumeService {
         resume.setProgrammingLanguages(
             resume.getProgrammingLanguages().stream().map(
                     i -> {
-                        if(programmingLanguageDao.existsByNameIgnoreCase(i.getName())){
-                            return programmingLanguageDao.findByNameIgnoreCase(i.getName());
+                        if(programmingLanguageService.existsByNameIgnoreCase(i.getName())){
+                            return programmingLanguageService.findByNameIgnoreCase(i.getName());
                         }
                        return i;
                     }

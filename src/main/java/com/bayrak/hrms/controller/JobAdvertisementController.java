@@ -9,6 +9,7 @@ import com.bayrak.hrms.service.JobAdvertiesementService;
 import com.bayrak.hrms.utils.results.DataResult;
 import com.bayrak.hrms.utils.results.Result;
 import com.bayrak.hrms.utils.results.SuccessDataResult;
+import com.bayrak.hrms.utils.results.SuccessResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +23,7 @@ public class JobAdvertisementController {
     private final JobAdvertiesementService jobAdvertiesementService;
 
     @PostMapping()
-    public DataResult<JobAdvertisement> add(@RequestBody postJobAdvertisementDto data) {
+    public DataResult<JobAdvertiesementDto> add(@RequestBody postJobAdvertisementDto data) {
         return new SuccessDataResult<>(jobAdvertiesementService.save(data));
     }
 
@@ -49,6 +50,7 @@ public class JobAdvertisementController {
 
     @PostMapping("/closeAdvertisement")
     public Result closeAdvertisemenet(@RequestBody CloseJobAdvertisementByEmployerDto dto) {
-        return jobAdvertiesementService.closeAdvertisementByEmployer(dto);
+        jobAdvertiesementService.closeAdvertisementByEmployer(dto);
+        return new SuccessResult("Advertisement closed successfully");
     }
 }

@@ -33,4 +33,3 @@ public interface JobAdvertiesementDao extends JpaRepository<JobAdvertisement, In
     List<JobAdvertiesementDto> getAllBySortedByDateActiveAdvertisements();
 
 }
-
