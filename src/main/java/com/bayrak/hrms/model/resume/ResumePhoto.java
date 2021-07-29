@@ -3,6 +3,8 @@ package com.bayrak.hrms.model.resume;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -24,6 +26,10 @@ public class ResumePhoto {
     @Column(name="id")
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private int id;
+
+    @OneToOne(mappedBy = "photo")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Resume resume;
 
     @Column(name = "url",nullable = false)
     @NotBlank

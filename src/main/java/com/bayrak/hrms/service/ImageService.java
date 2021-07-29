@@ -13,7 +13,7 @@ import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
-public class UploadImageService {
+public class ImageService {
 
     private final Cloudinary cloudinary;
 
@@ -36,6 +36,15 @@ public class UploadImageService {
                 .resourceType((String) upload.get("resource_type"))
                 .build());
         return resume;
+    }
+
+    public void deleteImage(ResumePhoto resumePhoto) {
+        try {
+            cloudinary.uploader().destroy(resumePhoto.getPublicId(), ObjectUtils.emptyMap());
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new UploadImageErrorException("An error occured when deleting image : " + e.getMessage());
+        }
     }
 
 

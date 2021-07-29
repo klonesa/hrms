@@ -103,14 +103,19 @@ public class GeneralExceptionAdvisor extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(ResumeNotFoundException.class)
+    public ResponseEntity<?> generalExceptionHandler(ResumeNotFoundException exception) {
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
     @ExceptionHandler(UploadImageErrorException.class)
     public ResponseEntity<?> generalExceptionHandler(UploadImageErrorException exception) {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(ResumeNotFoundException.class)
-    public ResponseEntity<?> generalExceptionHandler(ResumeNotFoundException exception) {
-        return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
+    @ExceptionHandler(DeleteImageErrorException.class)
+    public ResponseEntity<?> generalExceptionHandler(DeleteImageErrorException exception) {
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(ResumeAlreadyHaveImageException.class)
@@ -121,6 +126,11 @@ public class GeneralExceptionAdvisor extends ResponseEntityExceptionHandler {
     @ExceptionHandler(ResumeDoesNotHaveImageException.class)
     public ResponseEntity<?> generalExceptionHandler(ResumeDoesNotHaveImageException exception) {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.OK);
+    }
+
+    @ExceptionHandler(VerificationCodeMisMatchException.class)
+    public ResponseEntity<?> generalExceptionHandler(VerificationCodeMisMatchException exception) {
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.CONFLICT);
     }
 
 }

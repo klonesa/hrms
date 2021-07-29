@@ -1,6 +1,8 @@
 package com.bayrak.hrms.service;
 
 import com.bayrak.hrms.dto.resume.ResumeDto;
+import com.bayrak.hrms.exception.ResumeAlreadyHaveImageException;
+import com.bayrak.hrms.exception.ResumeDoesNotHaveImageException;
 import com.bayrak.hrms.exception.ResumeNotFoundException;
 import com.bayrak.hrms.model.Candidate;
 import com.bayrak.hrms.model.resume.Language;
@@ -30,13 +32,18 @@ public class ResumeService {
     private final ConvertResume convertResume;
     private final LanguageLevelConverter languageLevelConverter;
     private final ProgrammingLanguageDao programmingLanguageDao;
-    private final UploadImageService uploadImageService;
+    private final ImageService imageService;
 
-    public ResumeDto getById(int id) {
-
+    public ResumeDto findByIdConverDto(int id) {
         return convertResume.EntityToDto(resumeDao.findById(id).orElseThrow(
                 () -> { throw new ResumeNotFoundException(id); }
         ));
+    }
+
+    protected Resume findById(int id) {
+        return resumeDao.findById(id).orElseThrow(
+                () -> { throw new ResumeNotFoundException(id); }
+        );
     }
 
     public List<ResumeDto> getAll() {
@@ -84,7 +91,7 @@ public class ResumeService {
         );
 
         if (resumeDto.getPhotoUri() != null) {
-            final Map upload = uploadImageService.uploadImage(resumeDto.getPhotoUri());
+            final Map upload = imageService.uploadImage(resumeDto.getPhotoUri());
             resume.setPhoto(ResumePhoto.builder()
                     .photoUrl((String) upload.get("secure_url"))
                     .createdAt((String) upload.get("created_at"))
@@ -97,4 +104,40 @@ public class ResumeService {
         return convertResume.EntityToDto(resume);
     }
 
+    public ResumePhoto addPhoto(int resumeId, String photoUri){
+
+        Resume resume = resumeDao.findById(resumeId).map(
+                i -> {
+                    if (i.getPhoto() != null) {
+                        throw new ResumeAlreadyHaveImageException(resumeId);
+                    }
+                    resumeDao.save(imageService
+                            .uploadImageToResume(photoUri,i));
+                    return i;
+                }
+        ).orElseThrow(
+                () -> {throw new ResumeNotFoundException(resumeId);}
+        );
+        return resume.getPhoto();
+    }
+
+    public ResumePhoto updatePhoto(int resumeId, String photoUri) {
+        Resume resume = resumeDao.findById(resumeId).map(
+                i -> {
+                    if (i.getPhoto() == null) {
+                        throw new ResumeDoesNotHaveImageException(resumeId);
+                    }
+                    resumeDao.save(imageService
+                            .uploadImageToResume(photoUri,i));
+                    return i;
+                }
+        ).orElseThrow(
+                () -> {throw new ResumeNotFoundException(resumeId);}
+        );
+        return resume.getPhoto();
+    }
+
+    protected void save(Resume resume) {
+        resumeDao.save(resume);
+    }
 }

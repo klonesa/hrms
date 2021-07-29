@@ -7,6 +7,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.HashMap;
@@ -32,38 +34,32 @@ public class Resume {
 
     @ManyToOne
     @JoinColumn(name = "candidate_id", nullable = false)
-    @JsonIgnore/*Properties({"hibernateLazyInitializer", "handler"})*/
+    @JsonIgnore
     private Candidate candidate;
 
     @OneToMany(mappedBy = "resume", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Set<School> schoolList = new HashSet<>();
 
     @OneToMany(mappedBy = "resume", cascade = CascadeType.ALL,fetch = FetchType.EAGER,orphanRemoval = true)
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Set<JobExperience> jobExperience = new HashSet<>();
 
     @OneToMany(mappedBy = "resume",cascade = CascadeType.ALL,fetch = FetchType.EAGER,orphanRemoval = true)
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Set<ResumeLanguageLevel> resumeLanguageLevels = new HashSet<>();
 
     @ElementCollection
     @MapKeyColumn(name = "platform")
     @CollectionTable(name = "resume_social_links",joinColumns = @JoinColumn(name = "resume_id"))
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Map<SocialLink, String> socialLinks = new HashMap<>();
 
     @ManyToMany(fetch = FetchType.EAGER,cascade = {CascadeType.MERGE,CascadeType.PERSIST})
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Set<ProgrammingLanguage> programmingLanguages = new HashSet<>();
 
-
-    @Lob
-    @Column(name = "cover_letter")
+    @Column(name = "cover_letter",length = 2000)
     private String coverLetter;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "photo_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private ResumePhoto photo;
 
     public Resume(Candidate candidate, String coverLetter) {

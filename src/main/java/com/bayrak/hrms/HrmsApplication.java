@@ -5,6 +5,8 @@ import com.bayrak.hrms.model.Candidate;
 import com.bayrak.hrms.model.resume.Resume;
 import com.bayrak.hrms.repository.CandidateDao;
 import com.bayrak.hrms.repository.ResumeDao;
+import com.bayrak.hrms.repository.ResumePhotoDao;
+import com.bayrak.hrms.service.ResumeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -17,6 +19,8 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+import java.util.Random;
+
 @SpringBootApplication
 @EnableSwagger2
 @RequiredArgsConstructor
@@ -24,6 +28,8 @@ public class HrmsApplication implements CommandLineRunner {
 
 	final CandidateDao candidateDao;
 	final ResumeDao resumeDao;
+	final ResumePhotoDao resumePhotoDao;
+	final ResumeService resumeService;
 
 
 	public static void main(String[] args) {
@@ -43,21 +49,23 @@ public class HrmsApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args ) throws Exception {
 
+		Random random = new Random();
+
 		candidateDao.save(Candidate.builder()
 				.birthYear(1996)
 				.firstName("test")
 				.lastName("test")
-				.identityNumber("465465454654")
-				.email("test2@email.com")
+				.identityNumber(String.valueOf(random.nextInt(10000000)))
+				.email(String.valueOf(random.nextInt(100000))+"@email.com")
 				.password("654654654")
 				.build());
 
 		Candidate cdt = Candidate.builder()
-				.identityNumber("4654654")
+				.identityNumber(String.valueOf(random.nextInt(10000000)))
 				.firstName("testname")
 				.lastName("test")
 				.birthYear(1996)
-				.email("test@email.com")
+				.email(String.valueOf(random.nextInt(100000))+"test@email.com")
 				.password("654654654")
 				.build();
 
@@ -67,5 +75,9 @@ public class HrmsApplication implements CommandLineRunner {
 				.candidate(cdt)
 				.coverLetter("coverletter")
 				.build());
+
+//		resumeService.deletePhoto(1);
+//		resumePhotoDao.deleteById(1);
+////		resumeDao.deleteById(1);
 	}
 }

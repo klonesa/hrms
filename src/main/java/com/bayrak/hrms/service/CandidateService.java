@@ -48,4 +48,5 @@ public class CandidateService {
             throw new CandidateNotFoundException(id);
         });
     }
+
 }

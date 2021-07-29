@@ -7,7 +7,9 @@ import com.bayrak.hrms.service.ResumeService;
 import com.bayrak.hrms.utils.results.DataResult;
 import com.bayrak.hrms.utils.results.Result;
 import com.bayrak.hrms.utils.results.SuccessDataResult;
+import com.bayrak.hrms.utils.results.SuccessResult;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,7 +21,7 @@ public class ResumeController {
 
     @GetMapping("{id}")
     public DataResult getById(@PathVariable int id) {
-        return new SuccessDataResult(resumeService.getById(id));
+        return new SuccessDataResult(resumeService.findByIdConverDto(id));
     }
 
     @GetMapping()
@@ -44,5 +46,12 @@ public class ResumeController {
     public DataResult updatePhoto(@RequestBody ResumePhotoDto dto) {
         return new SuccessDataResult(resumePhotoService
                 .updatePhoto(dto.getResumeId(), dto.getPhotoUri()));
+    }
+
+    @DeleteMapping("/deletePhoto/{id}")
+    @ResponseStatus(value = HttpStatus.OK)
+    public Result deletePhoto(@PathVariable int id) {
+        resumePhotoService.deletePhoto(id);
+        return new SuccessResult("Resume photo deleted succesfully");
     }
 }

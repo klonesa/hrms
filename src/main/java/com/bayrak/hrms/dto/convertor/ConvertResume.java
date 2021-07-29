@@ -1,12 +1,10 @@
 package com.bayrak.hrms.dto.convertor;
 
-import com.bayrak.hrms.dto.convertor.LanguageLevelConverter;
-import com.bayrak.hrms.model.resume.*;
-import com.bayrak.hrms.dto.convertor.Convertor;
 import com.bayrak.hrms.dto.resume.JobExperienceDto;
 import com.bayrak.hrms.dto.resume.ResumeDto;
 import com.bayrak.hrms.dto.resume.ResumeLanguageDto;
 import com.bayrak.hrms.dto.resume.SchoolDto;
+import com.bayrak.hrms.model.resume.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -24,7 +22,6 @@ public class ConvertResume implements Convertor<Resume, ResumeDto> {
                 .resumeId(resume.getId())
                 .coverLetter(resume.getCoverLetter())
                 .build();
-
         result.setCandidateId(resume.getCandidate().getId());
 
         resume.getJobExperience().forEach(
@@ -34,37 +31,30 @@ public class ConvertResume implements Convertor<Resume, ResumeDto> {
                         .jobTitle(i.getJobTitle().getTitle())
                         .startDate(i.getStartDate())
                         .endDate(i.getEndDate())
-                        .build())
-        );
+                        .build()));
 
         resume.getSchoolList().forEach(
                 i -> result.getSchools().add(SchoolDto.builder()
                         .name(i.getName())
                         .isGraduated(i.isGraduated())
                         .graduateDate(i.getGraduateDate())
-                        .build()
-                )
-        );
+                        .build()));
 
         result.setLinks(resume.getSocialLinks());
 
         resume.getProgrammingLanguages().forEach(
                 i-> result.getProgammingLanguages().add(
-                        i.getName()
-                )
-        );
+                        i.getName()));
 
         resume.getResumeLanguageLevels().forEach(
                 i-> result.getLanguages().add(ResumeLanguageDto.builder()
                         .language(i.getLanguage().getName())
                         .level(languageLevelConverter.convertToDatabaseColumn(i.getLanguageLevel()))
-                        .build())
-        );
+                        .build()));
 
         if(resume.getPhoto()!=null && resume.getPhoto().getPhotoUrl()!=null){
             result.setPhotoUrl(resume.getPhoto().getPhotoUrl());
         }
-
         return result;
     }
 
@@ -81,8 +71,7 @@ public class ConvertResume implements Convertor<Resume, ResumeDto> {
                                 .build())
                         .languageLevel(languageLevelConverter
                                 .convertToEntityAttribute(i.getLevel()))
-                        .build())
-        );
+                        .build()));
 
         resumeDto.getSchools().forEach(
                 i -> {
@@ -92,16 +81,14 @@ public class ConvertResume implements Convertor<Resume, ResumeDto> {
                         school.setGraduateDate(i.getGraduateDate());
                     }
                     resume.getSchoolList().add(school);
-                }
-        );
+                });
 
         resumeDto.getProgammingLanguages().forEach(
                 i-> {
                     ProgrammingLanguage programmingLanguage = new ProgrammingLanguage();
                     programmingLanguage.setName(i);
                     resume.getProgrammingLanguages().add(programmingLanguage);
-                }
-        );
+                });
 
         resumeDto.getJobExperiences().forEach(
                 i-> {
@@ -114,8 +101,7 @@ public class ConvertResume implements Convertor<Resume, ResumeDto> {
 
                     je.setJobTitle(new JobTitle(0,i.getJobTitle()));
                     resume.getJobExperience().add(je);
-                }
-        );
+                });
 
         resumeDto.getLinks().forEach(
                 (k, v) -> resume.getSocialLinks().put(k, v)
@@ -124,7 +110,6 @@ public class ConvertResume implements Convertor<Resume, ResumeDto> {
         if(resumeDto.getCoverLetter()!= null){
             resume.setCoverLetter(resumeDto.getCoverLetter());
         }
-
         return resume;
     }
 
