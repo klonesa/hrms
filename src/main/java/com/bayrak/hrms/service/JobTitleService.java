@@ -25,6 +25,10 @@ public class JobTitleService {
         });
     }
 
+    public List<String> findAllString() {
+        return jobTitleDao.findAllString();
+    }
+
     public JobTitle save(JobTitle jobTitle){
         return jobTitleDao.save(jobTitle);
     }

@@ -22,7 +22,7 @@ public class VerificationCodeEmployerService {
 
     private final VerificationCodeEmployerDao verificationCodeEmployerDao;
 
-    public String generateCode(int employerId, Employer employer) {
+    protected String generateCode(int employerId, Employer employer) {
 
         String code = UUID.randomUUID().toString();
 

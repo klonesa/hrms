@@ -22,7 +22,7 @@ public class EmployerService {
 
     public void save(EmployerDto employerDto) {
         final Employer employer = employerConvertor.DtoToEntity(employerDto);
-        verifyEmployerService.verify(employer);
+        verifyEmployerService.verify(employerDto);
         employerDao.save(employer);
         generateCode(employer.getId());
     }

@@ -20,13 +20,13 @@ public class CandidateService {
 
     private final CandidateDao candidateDao;
     private final CandidateConverter candidateConverter;
-    private final VerifyService<Candidate> candidateVerifyService;
+    private final VerifyCandidateService verifyCandidateService;
     private final VerificationCodeCandidateService verificationCodeCandidateService;
 
     @Transactional
     public Result save(CandidateDto candidateDto) {
         final Candidate candidate = candidateConverter.DtoToEntity(candidateDto);
-        candidateVerifyService.verify(candidate);
+        verifyCandidateService.verify(candidateDto);
         candidateDao.save(candidate);
         generateCode(candidate.getId());
         return new SuccessDataResult<>(candidateDto,candidateDto.getFirstName() + " created succesfully");

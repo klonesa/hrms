@@ -21,8 +21,6 @@ import java.util.List;
 public class EmployerController {
 
     private final EmployerService employerService;
-    private final VerifyEmployerService verifyEmployerService;
-    private final EmployerConvertor employerConvertor;
 
     @GetMapping
     public DataResult<List<EmployerDto>> getAll(){
@@ -36,7 +34,6 @@ public class EmployerController {
 
     @PostMapping
     public Result add(@RequestBody @Valid EmployerDto employerDto){
-        verifyEmployerService.verify(employerConvertor.DtoToEntity(employerDto));
         employerService.save(employerDto);
         return new SuccessResult();
     }

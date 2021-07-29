@@ -1,25 +1,22 @@
 package com.bayrak.hrms.service;
 
+import com.bayrak.hrms.dto.EmployerDto;
 import com.bayrak.hrms.exception.EmailAlreadyTakenException;
 import com.bayrak.hrms.exception.EmployerDomainMisMatchException;
 import com.bayrak.hrms.model.Employer;
 import com.bayrak.hrms.repository.EmployerDao;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+@RequiredArgsConstructor
 @Service
-public class VerifyEmployerService implements VerifyService<Employer> {
-
+public class VerifyEmployerService implements VerifyService<EmployerDto> {
 
     private final EmployerDao employerDao;
 
-    @Autowired
-    public VerifyEmployerService(EmployerDao employerDao) {
-        this.employerDao = employerDao;
-    }
-
     @Override
-    public boolean verify(Employer data) {
+    public boolean verify(EmployerDto data) {
         if (!data.getWebAdress().contains(getDomain(data))) {
             throw new EmployerDomainMisMatchException("Email domain and web adress should match");
         }
@@ -29,7 +26,7 @@ public class VerifyEmployerService implements VerifyService<Employer> {
         return true;
     }
 
-    private String getDomain(Employer data) {
+    private String getDomain(EmployerDto data) {
         return data.getEmail().split("@")[1];
     }
 }

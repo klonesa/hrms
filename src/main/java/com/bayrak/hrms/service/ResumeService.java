@@ -38,12 +38,6 @@ public class ResumeService {
         ));
     }
 
-    protected Resume findById(int id) {
-        return resumeDao.findById(id).orElseThrow(
-                () -> { throw new ResumeNotFoundException(id); }
-        );
-    }
-
     public List<ResumeDto> getAll() {
         return resumeDao.findAll().stream()
                 .map(convertResume::EntityToDto)
@@ -102,7 +96,7 @@ public class ResumeService {
         return convertResume.EntityToDto(resume);
     }
 
-    public ResumePhoto addPhoto(int resumeId, String photoUri){
+    protected ResumePhoto addPhoto(int resumeId, String photoUri){
 
         Resume resume = resumeDao.findById(resumeId).map(
                 i -> {
@@ -119,7 +113,7 @@ public class ResumeService {
         return resume.getPhoto();
     }
 
-    public ResumePhoto updatePhoto(int resumeId, String photoUri) {
+    protected ResumePhoto updatePhoto(int resumeId, String photoUri) {
         Resume resume = resumeDao.findById(resumeId).map(
                 i -> {
                     if (i.getPhoto() == null) {
@@ -133,6 +127,12 @@ public class ResumeService {
                 () -> {throw new ResumeNotFoundException(resumeId);}
         );
         return resume.getPhoto();
+    }
+
+    protected Resume findById(int id) {
+        return resumeDao.findById(id).orElseThrow(
+                () -> { throw new ResumeNotFoundException(id); }
+        );
     }
 
     protected void save(Resume resume) {
